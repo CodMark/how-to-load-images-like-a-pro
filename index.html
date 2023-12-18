@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    body {
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .blurred-img::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        animation: pulse 2.5s infinite;
+        background-color: white;
+    }
+
+    @keyframes pulse {
+        0% {
+            opacity: 0;
+        }
+
+        50% {
+            opacity: 0.1;
+        }
+
+        100% {
+            opacity: 0;
+        }
+    }
+
+    .blurred-img {
+        background-image: url(./CITYSCAPE11420.png);
+        background-repeat: no-repeat;
+        background-size: cover;
+        filter: blur(5px);
+        width: 23rem;
+        height: auto;
+        overflow: hidden;
+        border-radius: 9px;
+        margin: 12px;
+    }
+
+    .blurred-img.loaded {
+        filter: blur(0px);
+
+    }
+
+    .blurred-img.loaded::before {
+        animation: none;
+        content: none;
+    }
+
+    .blurred-img img {
+        opacity: 0;
+        transition: opacity 250ms ease-in-out;
+        width: 100%;
+        height: 100%;
+    }
+
+    .blurred-img.loaded img {
+        opacity: 1;
+    }
+</style>
+
+<body>
+    <div class="blurred-img">
+        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiKQZyQQ698LKS2V5niAusFpPkHoxe2Dh66jJa29POQ1qTnn9X3bPuZHQq_FMeLtH2wjGhCwWWOkGVgUMpaPNzrF7_A0v9S_0vlkCwfNw7nnoNIh-oJwFtYLWqufShSbtqkajwltpUV-a3dC7CRQzzbeYg1MDMviQcG7KiZcVQJ_EzTuFQxMe1IhX5EtA/w1600/CITYSCAPE1142023.png"
+            loading="lazy" />
+    </div>
+</body>
+<script>
+    const blurredImageDiv = document.querySelectorAll(".blurred-img")
+    blurredImageDiv.forEach(div => {
+        const img = div.querySelector("img")
+        function loaded() {
+            div.classList.add("loaded")
+        }
+
+        if (img.complete) {
+            loaded()
+        } else {
+            img.addEventListener("load", loaded)
+        }
+    })
+</script>
+</html>
